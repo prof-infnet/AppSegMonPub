@@ -25,4 +25,9 @@
         android:layout_marginTop="60dp"
         android:text="@string/carregar_imagem" />
 
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
