@@ -25,6 +25,20 @@
         android:layout_marginTop="60dp"
         android:text="@string/carregar_imagem" />
 
+    <Button
+        android:id="@+id/bt_write"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="callWriteOnExternalStorage"
+        android:text="@string/escrever_no_armazenamento_externo" />
+
+    <Button
+        android:id="@+id/bt_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="callReadFromExternalStorage"
+        android:text="@string/ler_no_armazenamento_externo" />
+
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"

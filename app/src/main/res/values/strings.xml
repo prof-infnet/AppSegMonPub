@@ -2,4 +2,6 @@
     <string name="app_name">AppSegMonPub</string>
     <string name="carregar_imagem">Carregar Imagem</string>
     <string name="logotipo_da_infnet">Logotipo da Infnet</string>
+    <string name="escrever_no_armazenamento_externo">Escrever no Armazenamento Externo</string>
+    <string name="ler_no_armazenamento_externo">Ler no Armazenamento Externo</string>
 </resources>
