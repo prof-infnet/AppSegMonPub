@@ -39,6 +39,12 @@
         android:onClick="callReadFromExternalStorage"
         android:text="@string/ler_no_armazenamento_externo" />
 
+    <Button
+        android:id="@+id/bt_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="callAccessLocation"
+        android:text="@string/acessar_a_localizacao" />
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"

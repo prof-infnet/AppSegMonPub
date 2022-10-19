@@ -1,6 +1,7 @@
 package br.edu.infnet.appsegmonpub
 
 import android.Manifest
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,9 @@ import androidx.core.content.ContextCompat
 import br.edu.infnet.appsegmonpub.databinding.ActivityMainBinding
 import com.squareup.picasso.Picasso
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -176,4 +180,77 @@ class MainActivity : AppCompatActivity() {
             text.toString(),
             Toast.LENGTH_SHORT).show()
     }
+
+    fun callAccessLocation(view: View) {
+        val permissionAFL = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        val permissionACL = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (permissionAFL != PackageManager.PERMISSION_GRANTED &&
+            permissionACL != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this, Manifest.permission.ACCESS_FINE_LOCATION
+                )){
+                callDialog("É preciso liberar ACCESS_FINE_LOCATION",arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+            }
+            else{
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_PERMISSIONS_CODE)
+            }
+        }
+        else {
+            readMyCurrentCoordinates()
+        }
+    }
+
+    private fun readMyCurrentCoordinates() {
+        val locationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val isGPSEnabled = locationManager.isProviderEnabled(
+            LocationManager.GPS_PROVIDER
+        )
+        val isNetworkEnabled = locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+        if (!isGPSEnabled && !isNetworkEnabled) {
+            Toast.makeText(this, "Habilite o GPS!", Toast.LENGTH_LONG).show()
+            Log.d("Permissao", "Ative os serviços necessários")
+        } else {
+            if (isGPSEnabled) {
+                try {
+                    locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        2000L, 0f, locationListener
+                    )
+                } catch (ex: SecurityException) {
+                    Log.d("Permissao", "Security Exception")
+                }
+            } else if (isNetworkEnabled) {
+                try {
+                    locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        2000L, 0f, locationListener
+                    )
+                } catch (ex: SecurityException) {
+                    Log.d("Permissao", "Security Exception")
+                }
+            }
+        }
+    }
+
+    // Tratamento da Localização - INI
+    private val locationListener =
+        object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                Toast.makeText(applicationContext,
+                    "Lat: $location.latitude | Long: $location.longitude",
+                    Toast.LENGTH_SHORT).show()
+            }
+            override fun onStatusChanged(
+                provider: String, status: Int, extras: Bundle) {}
+            override fun onProviderEnabled(provider: String) {}
+            override fun onProviderDisabled(provider: String) {}
+        }
 }
