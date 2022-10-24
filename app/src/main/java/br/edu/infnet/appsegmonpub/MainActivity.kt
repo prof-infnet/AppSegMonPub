@@ -128,9 +128,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //private fun readFile() {
-        //  TODO("Not yet implemented")
-        //}
+
     }
 
     fun callReadFromExternalStorage(view: View) {
@@ -244,6 +242,7 @@ class MainActivity : AppCompatActivity() {
     private val locationListener =
         object : LocationListener {
             override fun onLocationChanged(location: Location) {
+
                 Toast.makeText(applicationContext,
                     "Lat: $location.latitude | Long: $location.longitude",
                     Toast.LENGTH_SHORT).show()
